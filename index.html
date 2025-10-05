@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ITS_MAX_GAMES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>ITS_MAX_GAMES</header>
+
+<div class="container" id="games-container">
+    <!-- Games will be loaded here via JS -->
+</div>
+
+<hr>
+
+<!-- Admin panel -->
+<div style="padding:20px;">
+    <h2>Admin Panel (Add Games)</h2>
+    <label>Game Name:</label>
+    <input type="text" id="game-name"><br><br>
+    <label>Description:</label>
+    <input type="text" id="game-desc"><br><br>
+    <label>Link:</label>
+    <input type="text" id="game-link"><br><br>
+    <label>Image Path (inside images folder):</label>
+    <input type="text" id="game-img"><br><br>
+    <button onclick="addGame()">Add Game</button>
+</div>
+
+<script>
+let games = [];
+
+async function loadGames() {
+    try {
+        const response = await fetch('data.json');
+        games = await response.json();
+        displayGames();
+    } catch (e) {
+        console.log("Could not load data.json. Using empty array.");
+        displayGames();
+    }
+}
+
+function displayGames() {
+    const container = document.getElementById('games-container');
+    container.innerHTML = '';
+    games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+            <img src="${game.image}" alt="${game.name}">
+            <h3>${game.name}</h3>
+            <p>${game.description}</p>
+            <a href="${game.link}" target="_blank"><button>Play / Download</button></a>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function addGame() {
+    const name = document.getElementById('game-name').value;
+    const desc = document.getElementById('game-desc').value;
+    const link = document.getElementById('game-link').value;
+    const img = document.getElementById('game-img').value;
+
+    if(name && desc && link && img) {
+        games.push({name, description: desc, link, image: "images/"+img});
+        displayGames();
+        alert("Game added in preview. To make it permanent, update data.json in GitHub repo.");
+    } else {
+        alert("Fill all fields!");
+    }
+}
+
+window.onload = loadGames;
+</script>
+</body>
+</html>

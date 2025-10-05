@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Tomb Raider: Anniversary",
+    "description": "Experience Lara Croft's adventure in a fully remastered classic game.",
+    "link": "https://example.com/tomb-raider",
+    "image": "images/tomb-raider.jpg"
+  },
+  {
+    "name": "Minecraft",
+    "description": "Explore and build in a blocky 3D world.",
+    "link": "https://example.com/minecraft",
+    "image": "images/minecraft.jpg"
+  }
+]
